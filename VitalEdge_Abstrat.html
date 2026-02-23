@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VitalEdge — Startup Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111113;
+    --deep: #16161a;
+    --card: #1c1c22;
+    --card2: #22222a;
+    --border: #2a2a35;
+    --accent: #ff4d1c;
+    --accent2: #ff8c42;
+    --teal: #00d4aa;
+    --blue: #4da6ff;
+    --yellow: #ffd166;
+    --muted: #888899;
+    --text: #e8e8f0;
+    --text2: #b0b0c0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(255,77,28,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    max-width: 900px;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+
+  .hero-desc {
+    max-width: 640px;
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-val span { color: var(--accent); }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* NAV BAR */
+  .nav-strip {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .nav-strip a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 16px 20px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .nav-strip a:hover {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 60px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: attr(data-num);
+    font-size: 10px;
+    background: var(--accent);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    letter-spacing: -1px;
+  }
+
+  h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  p { color: var(--text2); margin-bottom: 16px; }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: var(--card);
+    padding: 28px;
+    transition: background 0.2s;
+  }
+
+  .card:hover { background: var(--card2); }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .card .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .tag-teal { background: rgba(0,212,170,0.12); color: var(--teal); }
+  .tag-orange { background: rgba(255,77,28,0.12); color: var(--accent); }
+  .tag-blue { background: rgba(77,166,255,0.12); color: var(--blue); }
+  .tag-yellow { background: rgba(255,209,102,0.12); color: var(--yellow); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+  }
+
+  .highlight-box.teal { border-left-color: var(--teal); }
+  .highlight-box.blue { border-left-color: var(--blue); }
+  .highlight-box.yellow { border-left-color: var(--yellow); }
+
+  /* TECH STACK TABLE */
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 14px;
+  }
+
+  .stack-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stack-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text2);
+    vertical-align: top;
+  }
+
+  .stack-table tr:hover td { background: var(--card); }
+
+  .stack-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--teal), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 36px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--black);
+  }
+
+  .tl-item:nth-child(2)::before { background: var(--accent2); }
+  .tl-item:nth-child(3)::before { background: var(--teal); }
+  .tl-item:nth-child(4)::before { background: var(--blue); }
+  .tl-item:nth-child(5)::before { background: var(--yellow); }
+  .tl-item:nth-child(6)::before { background: var(--teal); }
+
+  .tl-month {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .tl-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* ARCHITECTURE DIAGRAM */
+  .arch-diagram {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    margin: 32px 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+  }
+
+  .arch-layer {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: background 0.2s;
+  }
+
+  .arch-layer:hover { background: var(--card2); }
+
+  .arch-layer-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    min-width: 90px;
+    color: var(--muted);
+  }
+
+  .arch-layer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .arch-chip {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .arch-arrow {
+    text-align: center;
+    color: var(--muted);
+    padding: 4px 0;
+    font-size: 18px;
+  }
+
+  .layer-1 { border-color: rgba(255,77,28,0.3); }
+  .layer-2 { border-color: rgba(255,140,66,0.3); }
+  .layer-3 { border-color: rgba(0,212,170,0.3); }
+  .layer-4 { border-color: rgba(77,166,255,0.3); }
+  .layer-5 { border-color: rgba(255,209,102,0.3); }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(255,77,28,0.08), var(--card));
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -1px; right: 20px;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 0 0 6px 6px;
+  }
+
+  .price-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-amount span {
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .price-period {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .price-feature {
+    font-size: 13px;
+    color: var(--text2);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .price-feature::before {
+    content: '→';
+    color: var(--teal);
+    font-size: 11px;
+  }
+
+  /* MOAT SECTION */
+  .moat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .moat-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .moat-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .moat-item:nth-child(1)::before { background: var(--accent); }
+  .moat-item:nth-child(2)::before { background: var(--teal); }
+  .moat-item:nth-child(3)::before { background: var(--blue); }
+  .moat-item:nth-child(4)::before { background: var(--yellow); }
+
+  .moat-icon { font-size: 24px; margin-bottom: 10px; }
+  .moat-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* BIG QUOTE */
+  .big-quote {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+    padding: 40px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+    margin: 32px 0;
+  }
+
+  .big-quote::before {
+    content: '"';
+    position: absolute;
+    top: -10px; left: 30px;
+    font-size: 80px;
+    color: var(--accent);
+    font-family: Georgia, serif;
+    line-height: 1;
+    opacity: 0.4;
+  }
+
+  .big-quote cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    font-style: normal;
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  /* COMPARISON TABLE */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .comp-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    text-align: left;
+    background: var(--card);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .comp-table th:first-child { border-radius: 8px 0 0 0; }
+  .comp-table th:last-child { border-radius: 0 8px 0 0; }
+
+  .comp-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text2);
+  }
+
+  .comp-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .comp-table td:first-child {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .yes { color: var(--teal); }
+  .no { color: var(--accent); }
+  .partial { color: var(--yellow); }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 60px;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    border-top: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * { animation: fadeUp 0.6s ease forwards; }
+  .hero > *:nth-child(2) { animation-delay: 0.1s; }
+  .hero > *:nth-child(3) { animation-delay: 0.2s; }
+  .hero > *:nth-child(4) { animation-delay: 0.3s; }
+  .hero > *:nth-child(5) { animation-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    section, .hero, .nav-strip { padding-left: 24px; padding-right: 24px; }
+    .hero-stats { gap: 24px; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+    .arch-layer { flex-direction: column; align-items: flex-start; }
+  }
+
+  .number-callout {
+    font-family: 'Syne', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .signal-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+  }
+
+  .signal-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Deep-Tech Startup Blueprint · 2025–2031</div>
+  <h1>Vital<span>Edge</span></h1>
+  <div class="hero-subtitle">// Physiological Risk Intelligence for Industrial India</div>
+  <p class="hero-desc">
+    A B2B IoT + Edge AI SaaS platform that monitors physiological stress signals of blue-collar workers in real time — predicting accidents before they happen. Built on PPG + EDA + Thermal + TinyML fusion. Targeted at India's construction, manufacturing, and mining MSME sectors.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-val">380<span>M</span></div>
+      <div class="stat-label">Heat-exposed workers in India</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">8,700<span>+</span></div>
+      <div class="stat-label">Accidents per 100K workers / yr</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">₹0</div>
+      <div class="stat-label">Existing real-time physiological monitoring</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">$2.5<span>B</span></div>
+      <div class="stat-label">Industrial wearables market by 2029</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <a href="#technology">Technology</a>
+  <a href="#problem">The Problem</a>
+  <a href="#solution">Solution</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#ai">AI Engine</a>
+  <a href="#saas">SaaS Platform</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#moat">Defensibility</a>
+  <a href="#roadmap">6-Month Roadmap</a>
+  <a href="#publication">Publication Path</a>
+</nav>
+
+<!-- SECTION 1: TECHNOLOGY SELECTION -->
+<section id="technology">
+  <div class="section-label" data-num="01">Technology Selection</div>
+  <h2>Why PPG + EDA + Thermal + TinyML wins</h2>
+
+  <p>After scoring every technology in the PDF across VC traction, research momentum, Indian industrial applicability, Edge AI depth, and build feasibility — the highest-scoring stack isn't a single sensor. It's a <strong style="color: var(--text)">physiological signal fusion</strong> built from four complementary technologies that individually cost under ₹1,300 total but together create a sensing capability no existing Indian product has deployed.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">❤️‍🔥</div>
+      <div class="tag tag-orange">Core · ₹150</div>
+      <h3>PPG — MAX30102</h3>
+      <p>Heart rate, SpO₂, HRV. The HRV signal alone is a validated predictor of fatigue, heat stress, and cardiovascular collapse risk. This is the anchor signal.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="tag tag-teal">Stress · ₹300</div>
+      <h3>EDA / GSR — Grove Sensor</h3>
+      <p>Electrodermal activity from sweat gland activation. Captures sympathetic nervous system stress response that precedes physical collapse by 8–12 minutes.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌡️</div>
+      <div class="tag tag-blue">Environment · ₹300</div>
+      <h3>Thermal — MLX90614</h3>
+      <p>Contactless core temperature proxy via wrist skin temperature. Combined with ambient heat data, constructs a real-time heat strain index per worker.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <div class="tag tag-yellow">Intelligence · Free</div>
+      <h3>TinyML — Edge Impulse</h3>
+      <p>A quantized neural network running on ESP32 that classifies the fused signal into Low / Medium / High / Critical risk states in under 50ms — offline, private, instant.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h3>Why not EMG, EEG, or Bioimpedance alone?</h3>
+    <p>EMG gives localized muscle fatigue but requires gel electrodes repositioned by skill — impractical at construction sites. EEG is prohibitively complex for continuous wear. Bioimpedance needs careful calibration per individual. PPG + EDA is wrist-based, passive, continuous, and validated across thousands of published studies. The signal fusion is what competitors haven't done.</p>
+  </div>
+
+  <table class="stack-table">
+    <thead>
+      <tr>
+        <th>Technology</th>
+        <th>VC Signal (2025)</th>
+        <th>India Fit</th>
+        <th>Build Feasibility</th>
+        <th>Edge AI Depth</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>PPG + EDA + Thermal Fusion ✓</td>
+        <td>🔥 Very High</td>
+        <td>🔥 Perfect</td>
+        <td>🔥 Easy</td>
+        <td>🔥 Deep</td>
+        <td style="color:var(--teal); font-weight:700">9.4 / 10</td>
+      </tr>
+      <tr>
+        <td>WiFi CSI (Presence/Breathing)</td>
+        <td>High</td>
+        <td>Medium</td>
+        <td>Medium</td>
+        <td>High</td>
+        <td>7.8 / 10</td>
+      </tr>
+      <tr>
+        <td>EMG (Muscle Fatigue)</td>
+        <td>High</td>
+        <td>Low</td>
+        <td>Hard</td>
+        <td>High</td>
+        <td>6.9 / 10</td>
+      </tr>
+      <tr>
+        <td>Seismic / Vibration</td>
+        <td>Medium</td>
+        <td>High</td>
+        <td>Easy</td>
+        <td>Medium</td>
+        <td>6.5 / 10</td>
+      </tr>
+      <tr>
+        <td>Doppler Radar</td>
+        <td>Medium</td>
+        <td>Medium</td>
+        <td>Medium</td>
+        <td>Medium</td>
+        <td>6.2 / 10</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 2: THE PROBLEM -->
+<section id="problem">
+  <div class="section-label" data-num="02">The Problem</div>
+  <h2>The invisible epidemic no one is measuring</h2>
+
+  <div class="big-quote">
+    In India, up to 75% of the workforce — 380 million people — depend on heat-exposed labour. Workers die not because safety rules don't exist, but because <em>nobody knows a worker is in crisis until they collapse.</em>
+    <cite>— Ministry of Labour &amp; Employment + Lancet Countdown 2023</cite>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 style="color: var(--accent)">Who suffers</h3>
+      <p>Blue-collar workers in construction (56M workers), manufacturing MSMEs (110M), and mining (2.5M in Odisha, Jharkhand, Chhattisgarh alone). These are not isolated incidents — India averages 3 deaths and 11 injuries in registered factories every single day, and this covers only 10% of the actual workforce. The informal sector is completely invisible.</p>
+
+      <div class="highlight-box" style="margin-top: 16px;">
+        <p>A construction worker in 42°C heat with 80% humidity crosses a critical Heat Strain Index threshold roughly 2.3 hours into a shift. Nobody knows. A supervisor walking by cannot see it. The worker's body suppresses distress signals cognitively — until syncope.</p>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="color: var(--teal)">Why underserved</h3>
+      <p>Existing industrial safety solutions in India are either:</p>
+      <ul style="list-style: none; margin: 12px 0;">
+        <li class="price-feature">PPE compliance cameras (see a helmet, not a physiology)</li>
+        <li class="price-feature">Generic GPS trackers (location, not risk state)</li>
+        <li class="price-feature">Manual supervisor walkthroughs every 2–4 hours</li>
+        <li class="price-feature">Post-incident ERP logging (records deaths, prevents nothing)</li>
+      </ul>
+      <p style="margin-top: 12px;">Not a single affordable wearable in the Indian market does real-time physiological risk scoring. The closest products — Garmin, Apple Watch — are ₹30,000+ and designed for recreation, not industrial fatigue classification.</p>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top: 32px;">
+    <div class="card">
+      <div class="number-callout">60%</div>
+      <p style="margin-top: 8px;">Construction workers exposed to elevated temperatures experience significant productivity loss — confirmed across 2,387 workers in 2024 meta-analysis (BMC Public Health)</p>
+    </div>
+    <div class="card">
+      <div class="number-callout">11.4</div>
+      <p style="margin-top: 8px;">Deaths per 100,000 workers per year in India. Fatality rate 4× higher than the EU industrial average, yet occupational health monitoring market penetration is near zero.</p>
+    </div>
+    <div class="card">
+      <div class="number-callout">90%</div>
+      <p style="margin-top: 8px;">Of India's workforce is in the informal sector — completely outside the safety reporting system. No data, no alerts, no accountability, no product serving them.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box yellow" style="margin-top: 32px;">
+    <h3>The precise gap VitalEdge fills</h3>
+    <p>No product in India continuously monitors a worker's physiological state (heart rate variability + skin conductance + skin temperature) and generates a real-time predictive risk score visible to both the worker and supervisor — before an incident occurs. The gap isn't technology. The gap is a deployment-ready, affordable, rugged, connectivity-independent system designed for Indian industrial constraints: dust, heat, illiterate end-users, spotty 4G, ₹500/month labour cost context.</p>
+  </div>
+</section>
+
+<!-- SECTION 3: SOLUTION -->
+<section id="solution">
+  <div class="section-label" data-num="03">Solution</div>
+  <h2>VitalEdge — what it actually does</h2>
+
+  <p>VitalEdge is a three-component system: a wrist-worn IoT device, an ESP32-based site gateway, and a cloud SaaS platform. The device continuously reads PPG, EDA, and skin temperature. An on-device TinyML model classifies risk state every 10 seconds. A risk score (0–100) is transmitted via ESP-NOW to the gateway, which aggregates all workers and pushes to cloud. Supervisors see a live floor map. HR managers see weekly physiological compliance reports. Safety officers get predictive incident alerts with 8–15 minute lead time.</p>
+
+  <div class="arch-diagram">
+    <strong style="font-family: 'Syne', sans-serif; font-size: 16px; display: block; margin-bottom: 24px;">Signal Flow — What Happens In Each Component</strong>
+
+    <div class="arch-layer layer-1">
+      <span class="arch-layer-label">WRIST DEVICE</span>
+      <div class="arch-layer-content">
+        <span class="arch-chip tag-orange">PPG → HRV extraction</span>
+        <span class="arch-chip tag-orange">EDA → Stress index</span>
+        <span class="arch-chip tag-orange">MLX90614 → Skin temp</span>
+        <span class="arch-chip tag-orange">TinyML Risk Classifier</span>
+        <span class="arch-chip tag-orange">ESP-NOW TX</span>
+        <span class="arch-chip tag-orange">Haptic Alert</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-layer layer-2">
+      <span class="arch-layer-label">SITE GATEWAY</span>
+      <div class="arch-layer-content">
+        <span class="arch-chip tag-yellow">ESP32 ESP-NOW RX from all workers</span>
+        <span class="arch-chip tag-yellow">Device registry</span>
+        <span class="arch-chip tag-yellow">4G / WiFi uplink</span>
+        <span class="arch-chip tag-yellow">Local alarm relay</span>
+        <span class="arch-chip tag-yellow">Offline buffering</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-layer layer-3">
+      <span class="arch-layer-label">EDGE LAYER</span>
+      <div class="arch-layer-content">
+        <span class="arch-chip tag-teal">TinyML model (Edge Impulse)</span>
+        <span class="arch-chip tag-teal">Signal feature extraction</span>
+        <span class="arch-chip tag-teal">Risk score (0–100)</span>
+        <span class="arch-chip tag-teal">Inference: &lt;50ms</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-layer layer-4">
+      <span class="arch-layer-label">CLOUD AI</span>
+      <div class="arch-layer-content">
+        <span class="arch-chip tag-blue">Per-worker baseline profiling</span>
+        <span class="arch-chip tag-blue">Shift-level fatigue curve modeling</span>
+        <span class="arch-chip tag-blue">Anomaly detection (XGBoost)</span>
+        <span class="arch-chip tag-blue">Heat Strain Index computation</span>
+        <span class="arch-chip tag-blue">Predictive risk window</span>
+        <span class="arch-chip tag-blue">REST API for ERP integration</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↓</div>
+    <div class="arch-layer layer-5">
+      <span class="arch-layer-label">SAAS UI</span>
+      <div class="arch-layer-content">
+        <span class="arch-chip tag-yellow">Live floor map (site supervisor)</span>
+        <span class="arch-chip tag-yellow">Shift analytics dashboard</span>
+        <span class="arch-chip tag-yellow">Incident prediction log</span>
+        <span class="arch-chip tag-yellow">Compliance PDF reports</span>
+        <span class="arch-chip tag-yellow">WhatsApp alert bridge</span>
+        <span class="arch-chip tag-yellow">Role-based access: supervisor / HR / safety officer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: ARCHITECTURE -->
+<section id="architecture">
+  <div class="section-label" data-num="04">Hardware Design</div>
+  <h2>What you build in 6 months</h2>
+
+  <div class="two-col">
+    <div>
+      <h3>Wrist Device Bill of Materials</h3>
+      <table class="stack-table">
+        <thead>
+          <tr><th>Component</th><th>Purpose</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ESP32-C3 Mini</td><td>MCU + BLE + WiFi + ESP-NOW</td><td>₹180</td></tr>
+          <tr><td>MAX30102</td><td>PPG → HR + SpO₂ + HRV</td><td>₹150</td></tr>
+          <tr><td>Grove GSR</td><td>EDA stress index</td><td>₹300</td></tr>
+          <tr><td>MLX90614</td><td>Contactless skin temp</td><td>₹300</td></tr>
+          <tr><td>LiPo 500mAh</td><td>8–10 hr battery life</td><td>₹200</td></tr>
+          <tr><td>TP4056 module</td><td>USB-C charging</td><td>₹30</td></tr>
+          <tr><td>DRV2605L</td><td>Haptic feedback motor</td><td>₹120</td></tr>
+          <tr><td>3D printed / silicone band</td><td>Rugged wrist enclosure</td><td>₹80</td></tr>
+          <tr><td><strong>Total</strong></td><td></td><td style="color:var(--teal); font-weight:700">₹1,360</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3>Site Gateway</h3>
+      <table class="stack-table">
+        <thead>
+          <tr><th>Component</th><th>Purpose</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ESP32-WROOM-32</td><td>ESP-NOW hub, up to 20 devices</td><td>₹250</td></tr>
+          <tr><td>SIM7600E 4G module</td><td>Cloud uplink via cellular</td><td>₹800</td></tr>
+          <tr><td>SD Card module</td><td>Offline data buffering</td><td>₹80</td></tr>
+          <tr><td>12V industrial enclosure</td><td>IP65 rated site box</td><td>₹400</td></tr>
+          <tr><td>DC-DC Buck converter</td><td>Power from site supply</td><td>₹60</td></tr>
+          <tr><td><strong>Total</strong></td><td></td><td style="color:var(--teal); font-weight:700">₹1,590</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box teal" style="margin-top: 16px;">
+        <strong>One gateway serves a site of 20–50 workers. Per-device cost at 30 workers: ₹1,360 + ₹53 gateway share = ₹1,413 total hardware per worker.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: AI ENGINE -->
+<section id="ai">
+  <div class="section-label" data-num="05">AI Engine</div>
+  <h2>Where the intelligence actually lives</h2>
+
+  <div class="highlight-box">
+    <h3>The key insight: two AI systems working at different time scales</h3>
+    <p>Edge AI on the device makes instant (10-second) decisions about current risk. Cloud AI learns population-level patterns over weeks and refines per-worker baselines. Together, they become more accurate the longer a customer uses the platform — creating a compounding intelligence advantage that new entrants cannot replicate quickly.</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 style="color: var(--accent)">Layer 1: Edge TinyML (on ESP32)</h3>
+
+      <p><strong style="color: var(--text)">Model:</strong> Quantized neural network, INT8, ~95KB. Built in Edge Impulse. Trained on open-access physiological datasets (WESAD, DEAP, SWELL) + synthetic heat-stress augmentation.</p>
+
+      <p><strong style="color: var(--text)">Input features (per 10-sec window):</strong></p>
+      <div class="signal-row">
+        <span class="signal-chip" style="border-color: rgba(255,77,28,0.4); color: var(--accent2)">HRV (RMSSD)</span>
+        <span class="signal-chip" style="border-color: rgba(255,77,28,0.4); color: var(--accent2)">HR (BPM)</span>
+        <span class="signal-chip" style="border-color: rgba(255,77,28,0.4); color: var(--accent2)">SpO₂</span>
+        <span class="signal-chip" style="border-color: rgba(0,212,170,0.4); color: var(--teal)">EDA tonic level</span>
+        <span class="signal-chip" style="border-color: rgba(0,212,170,0.4); color: var(--teal)">EDA phasic peaks/min</span>
+        <span class="signal-chip" style="border-color: rgba(77,166,255,0.4); color: var(--blue)">Skin temp (°C)</span>
+        <span class="signal-chip" style="border-color: rgba(77,166,255,0.4); color: var(--blue)">Temp delta (5-min trend)</span>
+      </div>
+
+      <p><strong style="color: var(--text)">Output:</strong> Risk class {0: Safe, 1: Caution, 2: Elevated, 3: Critical} + confidence score.</p>
+      <p>Inference latency: &lt;50ms. No internet needed. Works in dead zones, tunnels, basements.</p>
+    </div>
+
+    <div>
+      <h3 style="color: var(--teal)">Layer 2: Cloud AI (Python / AWS / GCP)</h3>
+
+      <p><strong style="color: var(--text)">Per-worker baseline profiling:</strong> First 5 shifts establish individual physiological baseline. Alerts adapt to individual variation — a worker who naturally has high EDA is scored relative to their own norm, not population average.</p>
+
+      <p><strong style="color: var(--text)">Shift-level fatigue curve modeling:</strong> XGBoost model trained on time-series of risk scores per shift. Predicts when a given worker will breach risk threshold based on current shift trajectory — gives supervisor a 8–15 minute predictive window.</p>
+
+      <p><strong style="color: var(--text)">Anomaly detection:</strong> Isolation Forest flags physiological patterns inconsistent with work context — e.g., elevated HR + low EDA at rest could indicate cardiac event rather than heat stress. Separate alert pathway.</p>
+
+      <p><strong style="color: var(--text)">Population-level insights:</strong> Aggregate shift analytics identify which worktimes, temperatures, task types, and site locations produce highest risk — actionable for safety policy, not just monitoring.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box blue" style="margin-top: 24px;">
+    <h3>Training approach for the prototype</h3>
+    <p>Use WESAD (Wearable Stress and Affect Detection) dataset from TU Munich — 15 subjects, PPG + EDA + temperature, stress/non-stress labels. Augment with synthetic heat-stress scenarios using temperature ramp simulation. Target: 85%+ accuracy on 3-class classification (safe/caution/critical) before first pilot. Edge Impulse provides end-to-end pipeline: data ingestion → feature engineering → model training → INT8 quantization → ESP32 deployment library.</p>
+  </div>
+</section>
+
+<!-- SECTION 6: SAAS PLATFORM -->
+<section id="saas">
+  <div class="section-label" data-num="06">SaaS Platform</div>
+  <h2>The software layer that makes this a company, not a product</h2>
+
+  <p>The device is the entry point. The SaaS platform is the business. Every additional day of data makes the predictions more accurate. Every additional site makes the population model richer. The SaaS is not a monitoring dashboard — it is a <strong style="color: var(--text)">Workplace Physiological Risk Intelligence platform</strong> with three distinct user roles.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="tag tag-orange">Role: Site Supervisor</div>
+      <h3>Live Site Command</h3>
+      <p>Floor map of all workers color-coded by real-time risk score. Instant push notification (app + WhatsApp) when any worker enters Elevated/Critical state. Single-tap emergency response log. Works on a ₹8,000 Android phone.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-teal">Role: Safety Officer</div>
+      <h3>Predictive Risk Console</h3>
+      <p>Shift trajectory forecasts. "Worker #14 is predicted to breach Critical threshold in ~12 minutes based on current pattern." Incident prediction history with accuracy scoring. DGFASLI-format compliance export.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-blue">Role: HR / Management</div>
+      <h3>Workforce Health Analytics</h3>
+      <p>Weekly / monthly physiological compliance reports. Risk distribution across departments, shifts, seasons. Comparison of risk profiles pre/post safety interventions. Cost-of-incident estimation (insurance integration ready).</p>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top: 24px;">
+    <h3>WhatsApp Integration — the Indian context differentiator</h3>
+    <p>Native mobile apps fail in Indian industrial contexts — supervisors don't check apps, don't install updates, forget passwords. VitalEdge alerts via WhatsApp Business API. A Critical alert sends: "⚠️ Worker Ramesh (Zone B) — Critical Heat Stress Risk. Predicted incident in ~10 min. [Tap to acknowledge]". This single feature removes the biggest deployment friction in India and has no equivalent in any competing product.</p>
+  </div>
+
+  <h3 style="margin-top: 32px; margin-bottom: 16px;">Tech Stack</h3>
+  <table class="stack-table">
+    <thead>
+      <tr><th>Layer</th><th>Technology</th><th>Reason</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Backend API</td><td>FastAPI (Python)</td><td>Native ML integration, async time-series ingestion</td></tr>
+      <tr><td>Database</td><td>TimescaleDB (PostgreSQL extension)</td><td>Purpose-built for time-series sensor data, SQL compatibility</td></tr>
+      <tr><td>ML Serving</td><td>Python + Scikit-learn + XGBoost</td><td>Your core stack; familiar, deployable</td></tr>
+      <tr><td>Frontend</td><td>React + Recharts</td><td>Rapid SaaS dashboard development</td></tr>
+      <tr><td>Cloud</td><td>AWS IoT Core + Lambda / GCP IoT</td><td>Scales from 10 to 10,000 devices without re-architecture</td></tr>
+      <tr><td>MQTT Broker</td><td>AWS IoT Core (managed)</td><td>Industry standard IoT message protocol, free tier covers prototype</td></tr>
+      <tr><td>Alerts</td><td>WhatsApp Business API (Meta)</td><td>90%+ engagement vs. push notifications in Indian blue-collar context</td></tr>
+      <tr><td>Edge ML</td><td>Edge Impulse + TensorFlow Lite Micro</td><td>Free, ESP32-native, end-to-end pipeline</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 7: PRICING -->
+<section id="pricing">
+  <div class="section-label" data-num="07">Revenue Model</div>
+  <h2>Device + SaaS bundle — enterprise annual contracts</h2>
+
+  <p>The revenue model separates hardware (one-time or leased) from software (annual contract). The SaaS contract is the recurring, high-margin component. Hardware provides entry-point revenue and creates switching costs. Pricing is anchored to the cost of a single prevented incident — a factory fatality costs a company ₹8–25 lakhs in compensation, regulatory fines, and downtime. The SaaS subscription is ~1% of that number per worker per year.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">₹4,999 <span>/ device</span></div>
+      <div class="price-period">Hardware (amortized 3 years) + ₹999/device/month SaaS</div>
+      <div class="price-feature">Up to 25 workers per site</div>
+      <div class="price-feature">Live supervisor dashboard</div>
+      <div class="price-feature">WhatsApp alerts</div>
+      <div class="price-feature">Monthly compliance report</div>
+      <div class="price-feature">Email support</div>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="featured-badge">BEST FIT</div>
+      <div class="price-tier">Enterprise</div>
+      <div class="price-amount">₹3,999 <span>/ device</span></div>
+      <div class="price-period">50–200 workers + ₹799/device/month SaaS</div>
+      <div class="price-feature">All Starter features</div>
+      <div class="price-feature">Predictive risk forecasting (8–15 min lead)</div>
+      <div class="price-feature">Per-worker baseline profiling</div>
+      <div class="price-feature">DGFASLI compliance exports</div>
+      <div class="price-feature">Shift-level population analytics</div>
+      <div class="price-feature">API access for ERP integration</div>
+      <div class="price-feature">Dedicated onboarding</div>
+    </div>
+
+    <div class="pricing-card">
+      <div class="price-tier">Industrial SaaS</div>
+      <div class="price-amount">₹Custom</div>
+      <div class="price-period">200+ workers, multi-site</div>
+      <div class="price-feature">Multi-site dashboard</div>
+      <div class="price-feature">Custom ML model fine-tuning</div>
+      <div class="price-feature">Insurance partner data API</div>
+      <div class="price-feature">On-premise deployment option</div>
+      <div class="price-feature">Annual contract: ₹30–80L</div>
+    </div>
+  </div>
+
+  <div class="highlight-box teal" style="margin-top: 16px;">
+    <h3>Unit economics at 100 workers / enterprise client</h3>
+    <p>Hardware: 100 × ₹3,999 = ₹3.99L one-time. SaaS: 100 × ₹799 × 12 = ₹9.59L/year. Year 1 contract value: ₹13.58L per client. Cost of goods (hardware + cloud): ~₹2.8L. Gross margin on SaaS after Year 1: ~78%. Target: 15 enterprise clients by Month 18 = ₹1.44Cr ARR.</p>
+  </div>
+</section>
+
+<!-- SECTION 8: DEFENSIBILITY -->
+<section id="moat">
+  <div class="section-label" data-num="08">Defensibility</div>
+  <h2>How the data moat forms over 24 months</h2>
+
+  <div class="moat-grid">
+    <div class="moat-item">
+      <div class="moat-icon">📊</div>
+      <div class="moat-title">Proprietary Physiological Dataset</div>
+      <p style="font-size: 13px; color: var(--text2);">Every shift generates labeled physiological data from Indian workers in real conditions. By Month 18, this dataset doesn't exist anywhere else. It enables model performance no competitor can match without years of deployment.</p>
+    </div>
+    <div class="moat-item">
+      <div class="moat-icon">🏭</div>
+      <div class="moat-title">Per-Worker Baseline Lock-In</div>
+      <p style="font-size: 13px; color: var(--text2);">Each worker's 6-month physiological baseline is stored in the platform. Switching vendors means losing all baseline profiles — predictive accuracy drops to Day 1 level. This creates real switching cost.</p>
+    </div>
+    <div class="moat-item">
+      <div class="moat-icon">🔗</div>
+      <div class="moat-title">Workflow Integration</div>
+      <p style="font-size: 13px; color: var(--text2);">Once WhatsApp alerts, compliance reports, and ERP API feeds are integrated into daily safety workflows, the product is structurally embedded. Removal requires rebuilding the entire safety protocol.</p>
+    </div>
+    <div class="moat-item">
+      <div class="moat-icon">📋</div>
+      <div class="moat-title">Regulatory Alignment</div>
+      <p style="font-size: 13px; color: var(--text2);">DGFASLI compliance export positions VitalEdge as the evidence layer for regulatory audits. When occupational health compliance becomes mandatory — and it will — VitalEdge clients are already compliant.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px; margin-bottom: 16px;">Competitive Landscape — Why existing players don't solve this</h3>
+  <div style="overflow-x: auto;">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Company / Solution</th>
+          <th>Real-time Physiology?</th>
+          <th>Predictive Risk?</th>
+          <th>India-deployable?</th>
+          <th>Under ₹2,000/worker?</th>
+          <th>Heat Stress Focus?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>VitalEdge (proposed)</td>
+          <td class="yes">✓ Yes</td>
+          <td class="yes">✓ Yes</td>
+          <td class="yes">✓ Yes</td>
+          <td class="yes">✓ Yes</td>
+          <td class="yes">✓ Core feature</td>
+        </tr>
+        <tr>
+          <td>Jarsh Safety (India)</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No</td>
+          <td class="yes">✓ Yes</td>
+          <td class="partial">⚠ Partial</td>
+          <td class="no">✗ No</td>
+        </tr>
+        <tr>
+          <td>SlateSafety (US)</td>
+          <td class="yes">✓ Yes</td>
+          <td class="partial">⚠ Basic</td>
+          <td class="no">✗ Too expensive</td>
+          <td class="no">✗ No (₹15K+)</td>
+          <td class="yes">✓ Yes</td>
+        </tr>
+        <tr>
+          <td>Generic GPS trackers</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No</td>
+          <td class="yes">✓ Yes</td>
+          <td class="yes">✓ Yes</td>
+          <td class="no">✗ No</td>
+        </tr>
+        <tr>
+          <td>Smart helmets (various)</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No</td>
+          <td class="partial">⚠ Partial</td>
+          <td class="no">✗ No (₹5K+)</td>
+          <td class="no">✗ No</td>
+        </tr>
+        <tr>
+          <td>Apple Watch / Garmin</td>
+          <td class="yes">✓ Yes</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No (₹25K+)</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 9: ROADMAP -->
+<section id="roadmap">
+  <div class="section-label" data-num="09">6-Month Build Roadmap</div>
+  <h2>Month-by-month execution plan</h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-month">Month 1 — Signal Proof</div>
+      <div class="tl-title">Hardware validation + Edge Impulse baseline</div>
+      <p>Solder MAX30102 + Grove GSR + MLX90614 to ESP32 breadboard. Validate all three signals cleanly. Record your own physiological response during exercise, rest, and stress induction. Upload to Edge Impulse. Build first classification model. Target: can you reliably distinguish "resting" vs. "exercising" physiologically? This is your Day 0 proof-of-concept.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-month">Month 2 — Data + Model</div>
+      <div class="tl-title">Dataset training + TinyML deployment on ESP32</div>
+      <p>Download WESAD dataset. Retrain on combined WESAD + your own data. Target 80%+ accuracy on 3-class risk. Quantize to INT8. Deploy on ESP32. Measure inference time. Implement ESP-NOW transmission of risk score packet. Build the gateway receiver. Whole pipeline must work: wrist → ESP-NOW → gateway → serial print.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-month">Month 3 — Cloud Pipeline</div>
+      <div class="tl-title">Backend + Database + Alert Engine</div>
+      <p>Stand up FastAPI + TimescaleDB on AWS Free Tier. Build MQTT ingestion from gateway. Implement per-worker risk score time-series storage. Build shift trajectory model (XGBoost). Implement WhatsApp Business API alert for Critical state. Create basic supervisor dashboard in React. Test end-to-end with 3 wrist devices simultaneously. This is your demo-ready milestone.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-month">Month 4 — Hardening</div>
+      <div class="tl-title">PCB design + enclosure + 10-device stress test</div>
+      <p>Design simple PCB (EasyEDA, free). 3D-print wrist enclosure with silicone strap. Add LiPo charging. Test 10 simultaneous ESP-NOW devices to one gateway — validate no packet loss. Build battery life optimization: 10-second active sensing, 2-second deep sleep between samples. Target: 10-hour battery life. Implement offline buffering on gateway SD card.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-month">Month 5 — Pilot</div>
+      <div class="tl-title">10-worker field validation at construction site / workshop</div>
+      <p>Approach one MSME factory or construction contractor in Bhubaneswar/Odisha for a 4-week unpaid pilot. Deploy 10 devices. Have workers wear devices through full shifts. Collect real physiological data in Indian heat and physical labour conditions. Validate alert timing vs. worker-reported fatigue. This generates real data, real testimonials, and the first India-specific dataset for your model.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-month">Month 6 — Launch Assets</div>
+      <div class="tl-title">Conference paper + pitch deck + first paying client</div>
+      <p>Write IEEE/INDICON conference paper on "Real-time physiological risk classification using TinyML fusion on ESP32 for Indian industrial workers." Submit to INDICON 2025 or NCC 2026. Build pitch deck with pilot data. File provisional patent on signal fusion + classification architecture. Present at Proxima / SOA Innovation Expo. Target: 1 paid POC contract (₹2–5L) from pilot client or referral.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 10: PUBLICATION -->
+<section id="publication">
+  <div class="section-label" data-num="10">Academic Path</div>
+  <h2>From prototype to IEEE publication</h2>
+
+  <div class="two-col">
+    <div>
+      <h3>Conference targets (Year 1)</h3>
+      <div class="highlight-box">
+        <p><strong style="color: var(--text)">Primary:</strong> IEEE INDICON (India Council International Conference) — directly relevant, national, reviewed. Deadline typically August for December conference.</p>
+      </div>
+      <div class="highlight-box teal" style="margin-top: 12px;">
+        <p><strong style="color: var(--text)">Secondary:</strong> NCC (National Conference on Communications) — IIT-hosted, strong for signal processing papers.</p>
+      </div>
+      <div class="highlight-box blue" style="margin-top: 12px;">
+        <p><strong style="color: var(--text)">International:</strong> IEEE EMBC (Engineering in Medicine & Biology Conference) — global platform for physiological sensing work.</p>
+      </div>
+    </div>
+
+    <div>
+      <h3>Paper angle</h3>
+      <p><strong style="color: var(--text)">Title:</strong> "VitalEdge: Real-Time Physiological Risk Classification for Industrial Heat Stress Prevention Using Multi-Modal Sensing and TinyML on ESP32"</p>
+
+      <p><strong style="color: var(--text)">Novel contributions:</strong></p>
+      <ul style="list-style: none; margin: 8px 0;">
+        <li class="price-feature">PPG + EDA + skin temperature fusion for heat stress risk (not done before on ESP32)</li>
+        <li class="price-feature">Quantized TinyML classifier running at &lt;50ms on ESP32-C3</li>
+        <li class="price-feature">First field validation on Indian construction workers</li>
+        <li class="price-feature">ESP-NOW multi-node mesh for infrastructure-free industrial deployment</li>
+      </ul>
+
+      <div class="highlight-box yellow" style="margin-top: 12px;">
+        <p>The pilot data from Month 5 is what makes this publishable. Without real worker data, it's a lab paper. With it, it's a genuine contribution. The 10-worker pilot is not just business validation — it's your research dataset.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 40px; margin-bottom: 16px;">Longer-term: Journal path</h3>
+  <table class="stack-table">
+    <thead>
+      <tr><th>Target</th><th>Type</th><th>Timeline</th><th>Angle</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>IEEE Sensors Journal</td><td>Q1 Journal</td><td>Month 12–18</td><td>Multi-modal sensor fusion architecture</td></tr>
+      <tr><td>JMIR mHealth and uHealth</td><td>Q1 Journal</td><td>Month 14–18</td><td>Occupational health monitoring outcomes data</td></tr>
+      <tr><td>Safety Science (Elsevier)</td><td>Q1 Journal</td><td>Month 18+</td><td>Predictive incident prevention with field data</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom: 16px; font-size: 14px; color: var(--text); font-family: 'Syne', sans-serif; font-weight: 600;">VitalEdge — Physiological Risk Intelligence</div>
+  BUILT FOR VIVEK RANJAN SAHOO · ITER, SOA UNIVERSITY · BHUBANESWAR, ODISHA
+  <br>
+  <span style="margin-top: 8px; display: block; font-size: 10px; color: rgba(136,136,153,0.5);">
+    Technologies: PPG · EDA · Thermal Sensing · TinyML · ESP-NOW · ESP32 · Edge AI · XGBoost · FastAPI · TimescaleDB · WhatsApp Business API
+  </span>
+</footer>
+
+</body>
+</html>
